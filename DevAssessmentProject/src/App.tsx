@@ -71,7 +71,8 @@ function sortCards(cards: Devcard[], click: boolean) {
     } else {
       let a_time = a.timestamp
       let b_time = b.timestamp
-      if (b_time == null) return -1
+      if (a_time == null && b_time == null) return 0
+      else if (b_time == null) return -1
       else if (a_time == null) return 1
       else return a_time.getTime() - b_time.getTime()
     }
