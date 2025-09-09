@@ -9,54 +9,46 @@ const mainButtonCSS: string = "w-1/5 h-48 align-middle py-2.5 px-5 me-2 mb-2 tex
 
 function App() {
   const [cards, setCards] = useState(dummyCards)
+
+  function mapCards() {
+    setCards((cards) => (cards.map(card => card)))
+  }
+
   return (
     <>
       <div className="py-10 text-center">
         {cards.map(card => (
-          <button id={card.id} className={mainButtonCSS} onClick = {() => setCards((cards) => 
-          (
-            cards.map(c => (c.id === card.id ? {
-              id: card.id,
-              clicks: card.clicks + 1,
-              timestamp: card.timestamp == null ? new Date() : card.timestamp
-            } : c))
-          ))}>
+          <button id={card.id} className={mainButtonCSS} onClick = {() => {
+            setCards((cards) => 
+            (
+              cards.map(c => (c.id === card.id ? {
+                id: card.id,
+                clicks: card.clicks + 1,
+                timestamp: card.timestamp == null ? new Date() : card.timestamp
+              } : c))
+            ))
+          }}>
             <h3 className="font-bold text-3xl">{card.id}</h3>
             <p className="align-bottom">Clicks: {card.clicks}</p>
             <p className="align-bottom">{card.timestamp == null ? "Never Clicked" : card.timestamp.toUTCString()}</p>
           </button>
         ))}
       </div>
-
       <div className="text-center">
         <button id="sort1" className={defaultButtonCSS} onClick = {() => {
           sortCards(cards, true)
-          setCards((cards) => 
-          (
-            cards.map(card => ({
-              id: card.id,
-              clicks: card.clicks,
-              timestamp: card.timestamp
-            }))
-          ))}}>
+          mapCards()
+        }}>
           Sort by most clicked
         </button>
         <button id="sort2" className={defaultButtonCSS} onClick = {() => {
           sortCards(cards, false)
-          setCards((cards) => 
-          (
-            cards.map(card => ({
-              id: card.id,
-              clicks: card.clicks,
-              timestamp: card.timestamp
-            }))
-          ))}}>
+          mapCards()
+        }}>
           Sort by earliest clicked
         </button>
-
         <br></br>
-
-        <button id="clear" className={defaultButtonCSS} onClick = {() => setCards((cards) => dummyCards)}>
+        <button id="clear" className={defaultButtonCSS} onClick = {() => {setCards((cards) => dummyCards)}}>
           Clear
         </button>
       </div>
